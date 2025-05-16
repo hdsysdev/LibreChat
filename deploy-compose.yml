@@ -1,20 +1,42 @@
 services:
-  faster-whisper:
-    image: lscr.io/linuxserver/faster-whisper:latest
-    container_name: faster-whisper
-    environment:
-      - PUID=1002
-      - PGID=27
-      - TZ=GMT
-      - WHISPER_MODEL=tiny-int8
-      - WHISPER_BEAM=1 #optional
-      - WHISPER_LANG=en #optional
-    volumes:
-      - /whisper/data:/config
+ 
+  # -------------------------------------------------------------------
+  # 1) The Speeches TTS server
+  # -------------------------------------------------------------------
+  speeches:
+    image: ghcr.io/acheong08/speeches:latest   # replace with the correct Speeches image if yours is different
+    container_name: speeches
+    restart: unless-stopped  
     ports:
-      - 10300:10300
-    restart: unless-stopped
+      - "8000:8000"                            # Speeches serves on 8000/v1/audio/speech
+    environment:
+      # So that huggingface-cli can pull private models if needed:
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN:-""}
+      # Fixed revision for the Kokoro ONNX release
+      - KOKORO_REVISION=c97b7bbc3e60f447383c79b2f94fee861ff156ac
+      # Optional: turn off auth if your librechat instance is public
+      - SPEECHES_NO_AUTH=1
+    volumes:
+      # persist downloaded models so you don't re-download every time
+      - tts-hf-cache:/root/.cache/huggingface/hub
+    entrypoint: >
+      /bin/bash -eux -c "
+        # 1) Download Kokoro ONNX model (346MB) + voices.bin (5.5MB)
+        huggingface-cli download hexgrad/Kokoro-82M \
+          --include 'kokoro-v0_19.onnx' \
+          --revision $KOKORO_REVISION &&
 
+        mkdir -p /root/.cache/huggingface/hub/models--hexgrad--Kokoro-82M/snapshots/$KOKORO_REVISION && 
+        curl -L \
+          https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin \
+          -o /root/.cache/huggingface/hub/models--hexgrad--Kokoro-82M/snapshots/$KOKORO_REVISION/voices.bin &&
+
+        # 2) Download all Piper voices (~7.7GB).  If you only want English, swap this for the --include examples
+        huggingface-cli download rhasspy/piper-voices &&
+
+        # 3) Launch the Speeches FastAPI app
+        uvicorn main:app --host 0.0.0.0 --port 8000
+      "
   api:
     # build:
     #   context: .
@@ -27,6 +49,7 @@ services:
     depends_on:
       - mongodb
       - rag_api
+      - speeches
     restart: always
     extra_hosts:
     - "host.docker.internal:host-gateway"
@@ -106,3 +129,4 @@ services:
 
 volumes:
   pgdata2:
+  tts-hf-cache:
