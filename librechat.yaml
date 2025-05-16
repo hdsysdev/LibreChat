@@ -217,7 +217,7 @@ endpoints:
       forcePrompt: false
       
 modelSpecs:
-  enforce: true
+  enforce: false
   prioritize: true
   list:
     # Gemini 2.5 Pro Expert
