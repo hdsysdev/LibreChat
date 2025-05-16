@@ -10,6 +10,9 @@ interface:
   customWelcome: "Welcome to SlopAI {{user.name}}! Where we slop, you slurp."
   runCode: false
   agents: true
+  modelSelect: true
+  parameters: true
+  presets: true
 
 speech:
   speechTab:
