@@ -217,476 +217,476 @@ endpoints:
       forcePrompt: false
       
 modelSpecs:
-enforce: true
-prioritize: true
-list:
-  # Gemini 2.5 Pro Expert
-  - name: "kotlin-multiplatform-expert"
-    label: "Kotlin Multiplatform Expert (Gemini 2.5 Pro)"
-    default: true
-    description: "Advanced Kotlin Multiplatform development assistant with Compose for Android and iOS"
-    iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "google/gemini-2.5-pro-exp-03-25"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform Expert"
-      greeting: |
-        I'm your expert Kotlin Multiplatform development assistant, specializing in Compose for Android and iOS.
-        I can help you write, review, and debug code, explain concepts, and provide best practices for Kotlin Multiplatform development.
-        Feel free to ask any questions about Kotlin Multiplatform, Compose, or related technologies.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
+  enforce: true
+  prioritize: true
+  list:
+    # Gemini 2.5 Pro Expert
+    - name: "kotlin-multiplatform-expert"
+      label: "Kotlin Multiplatform Expert (Gemini 2.5 Pro)"
+      default: true
+      description: "Advanced Kotlin Multiplatform development assistant with Compose for Android and iOS"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Expert"
+        greeting: |
+          I'm your expert Kotlin Multiplatform development assistant, specializing in Compose for Android and iOS.
+          I can help you write, review, and debug code, explain concepts, and provide best practices for Kotlin Multiplatform development.
+          Feel free to ask any questions about Kotlin Multiplatform, Compose, or related technologies.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
 
-  # Gemini 2.5 Flash Thinking
-  - name: "kotlin-multiplatform-thinking"
-    label: "Kotlin Multiplatform Thinking (Gemini 2.5 Flash)"
-    description: "Fast-thinking Kotlin Multiplatform assistant for quick solutions"
-    iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "google/gemini-2.5-flash-preview:thinking"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform Thinking"
-      greeting: |
-        I'm your fast-thinking Kotlin Multiplatform assistant, ready to help with quick solutions and explanations.
-        I specialize in rapid problem-solving and concise code examples.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
+    # Gemini 2.5 Flash Thinking
+    - name: "kotlin-multiplatform-thinking"
+      label: "Kotlin Multiplatform Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Kotlin Multiplatform assistant for quick solutions"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Thinking"
+        greeting: |
+          I'm your fast-thinking Kotlin Multiplatform assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
 
-      # GPT-4o Latest
-  - name: "kotlin-multiplatform-gpt4"
-    label: "Kotlin Multiplatform GPT-4 (Latest)"
-    description: "Advanced Kotlin Multiplatform development with GPT-4"
-    iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "openai/chatgpt-4o-latest"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform GPT-4"
-      greeting: |
-        I'm your GPT-4 powered Kotlin Multiplatform assistant.
-        I can help with complex development tasks, code reviews, and detailed explanations.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
+        # GPT-4o Latest
+    - name: "kotlin-multiplatform-gpt4"
+      label: "Kotlin Multiplatform GPT-4 (Latest)"
+      description: "Advanced Kotlin Multiplatform development with GPT-4"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Kotlin Multiplatform assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
 
-  # O4 Mini
-  - name: "kotlin-multiplatform-o4mini"
-    label: "Kotlin Multiplatform O4 Mini"
-    description: "Efficient Kotlin Multiplatform development with O4 Mini"
-    iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "openai/o4-mini"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform O4 Mini"
-      greeting: |
-        I'm your o4 Mini powered Kotlin Multiplatform assistant.
-        I provide efficient solutions and clear explanations.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
+    # O4 Mini
+    - name: "kotlin-multiplatform-o4mini"
+      label: "Kotlin Multiplatform O4 Mini"
+      description: "Efficient Kotlin Multiplatform development with O4 Mini"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform O4 Mini"
+        greeting: |
+          I'm your o4 Mini powered Kotlin Multiplatform assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
 
-  # Grok-3 Beta
-  - name: "kotlin-multiplatform-grok"
-    label: "Kotlin Multiplatform Grok-3"
-    description: "Innovative Kotlin Multiplatform development with Grok-3"
-    iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "x-ai/grok-3-beta"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform Grok-3"
-      greeting: |
-        I'm your Grok-3 powered Kotlin Multiplatform assistant.
-        I can help with innovative solutions and creative approaches.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
+    # Grok-3 Beta
+    - name: "kotlin-multiplatform-grok"
+      label: "Kotlin Multiplatform Grok-3"
+      description: "Innovative Kotlin Multiplatform development with Grok-3"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Kotlin Multiplatform assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
 
-  # Deepseek V3
-  - name: "kotlin-multiplatform-deepseek"
-    label: "Kotlin Multiplatform Deepseek V3"
-    description: "Deep learning powered Kotlin Multiplatform development"
-    iconURL: "https://deepseek.ai/favicon.ico"
-    preset:
-      endpoint: "Programming"
-      model: "deepseek/deepseek-chat-v3-0324"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Kotlin Multiplatform Deepseek"
-      greeting: |
-        I'm your Deepseek V3 powered Kotlin Multiplatform assistant.
-        I can help with complex development tasks and detailed analysis.
-      promptPrefix: |
-        You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
-        Focus on:
-        - Writing idiomatic Kotlin code that works across platforms
-        - Implementing Compose UI components that follow Material Design and iOS guidelines
-        - Handling platform-specific requirements and best practices
-        - Explaining concepts with practical, real-world examples
-        - Following Kotlin Multiplatform best practices and design patterns
-        - Providing clear, actionable solutions for cross-platform development challenges
-  # Gemini 2.5 Pro Expert
-  - name: "spring-boot-expert"
-    label: "Spring Boot Expert (Gemini 2.5 Pro)"
-    default: true
-    description: "Advanced Spring Boot development assistant with Kotlin"
-    iconURL: "https://spring.io/images/spring-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "google/gemini-2.5-pro-exp-03-25"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Spring Boot Expert"
-      greeting: |
-        I'm your expert Spring Boot development assistant, specializing in Kotlin.
-        I can help you write, review, and debug Spring Boot applications, explain concepts, and provide best practices.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # Deepseek V3
+    - name: "kotlin-multiplatform-deepseek"
+      label: "Kotlin Multiplatform Deepseek V3"
+      description: "Deep learning powered Kotlin Multiplatform development"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Kotlin Multiplatform assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+    # Gemini 2.5 Pro Expert
+    - name: "spring-boot-expert"
+      label: "Spring Boot Expert (Gemini 2.5 Pro)"
+      default: true
+      description: "Advanced Spring Boot development assistant with Kotlin"
+      iconURL: "https://spring.io/images/spring-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Expert"
+        greeting: |
+          I'm your expert Spring Boot development assistant, specializing in Kotlin.
+          I can help you write, review, and debug Spring Boot applications, explain concepts, and provide best practices.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # Gemini 2.5 Flash Thinking
-  - name: "spring-boot-thinking"
-    label: "Spring Boot Thinking (Gemini 2.5 Flash)"
-    description: "Fast-thinking Spring Boot assistant for quick solutions"
-    iconURL: "https://spring.io/images/spring-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "google/gemini-2.5-flash-preview:thinking"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.1
-      modelLabel: "Spring Boot Thinking"
-      greeting: |
-        I'm your fast-thinking Spring Boot assistant, ready to help with quick solutions and explanations.
-        I specialize in rapid problem-solving and concise code examples.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # Gemini 2.5 Flash Thinking
+    - name: "spring-boot-thinking"
+      label: "Spring Boot Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Spring Boot assistant for quick solutions"
+      iconURL: "https://spring.io/images/spring-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Spring Boot Thinking"
+        greeting: |
+          I'm your fast-thinking Spring Boot assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # GPT-4o Latest
-  - name: "spring-boot-gpt4"
-    label: "Spring Boot GPT-4 (Latest)"
-    description: "Advanced Spring Boot development with GPT-4"
-    iconURL: "https://spring.io/images/spring-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "openai/chatgpt-4o-latest"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Spring Boot GPT-4"
-      greeting: |
-        I'm your GPT-4 powered Spring Boot assistant.
-        I can help with complex development tasks, code reviews, and detailed explanations.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # GPT-4o Latest
+    - name: "spring-boot-gpt4"
+      label: "Spring Boot GPT-4 (Latest)"
+      description: "Advanced Spring Boot development with GPT-4"
+      iconURL: "https://spring.io/images/spring-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Spring Boot assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # O4 Mini
-  - name: "spring-boot-o4mini"
-    label: "Spring Boot O4 Mini"
-    description: "Efficient Spring Boot development with O4 Mini"
-    iconURL: "https://spring.io/images/spring-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "openai/o4-mini"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.1
-      modelLabel: "Spring Boot O4 Mini"
-      greeting: |
-        I'm your O4 Mini powered Spring Boot assistant.
-        I provide efficient solutions and clear explanations.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # O4 Mini
+    - name: "spring-boot-o4mini"
+      label: "Spring Boot O4 Mini"
+      description: "Efficient Spring Boot development with O4 Mini"
+      iconURL: "https://spring.io/images/spring-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Spring Boot O4 Mini"
+        greeting: |
+          I'm your O4 Mini powered Spring Boot assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # Grok-3 Beta
-  - name: "spring-boot-grok"
-    label: "Spring Boot Grok-3"
-    description: "Innovative Spring Boot development with Grok-3"
-    iconURL: "https://spring.io/images/spring-logo.svg"
-    preset:
-      endpoint: "Programming"
-      model: "x-ai/grok-3-beta"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Spring Boot Grok-3"
-      greeting: |
-        I'm your Grok-3 powered Spring Boot assistant.
-        I can help with innovative solutions and creative approaches.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # Grok-3 Beta
+    - name: "spring-boot-grok"
+      label: "Spring Boot Grok-3"
+      description: "Innovative Spring Boot development with Grok-3"
+      iconURL: "https://spring.io/images/spring-logo.svg"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Spring Boot assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # Deepseek V3
-  - name: "spring-boot-deepseek"
-    label: "Spring Boot Deepseek V3"
-    description: "Deep learning powered Spring Boot development"
-    iconURL: "https://deepseek.ai/favicon.ico"
-    preset:
-      endpoint: "Programming"
-      model: "deepseek/deepseek-chat-v3-0324"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.1
-      modelLabel: "Spring Boot Deepseek"
-      greeting: |
-        I'm your Deepseek V3 powered Spring Boot assistant.
-        I can help with complex development tasks and detailed analysis.
-      promptPrefix: |
-        You are a Spring Boot expert specializing in Kotlin development.
-        Focus on:
-        - Writing clean, maintainable Spring Boot applications
-        - Implementing RESTful APIs and microservices
-        - Applying Spring Security best practices
-        - Optimizing performance and resource usage
-        - Following SOLID principles and clean architecture
-        - Providing practical solutions for common Spring Boot challenges
+    # Deepseek V3
+    - name: "spring-boot-deepseek"
+      label: "Spring Boot Deepseek V3"
+      description: "Deep learning powered Spring Boot development"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Spring Boot assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
 
-  # General Research
-  - name: "general-research-sonar"
-    label: "General Research (Sonar)"
-    default: true
-    description: "Fast and accurate general research assistant"
-    iconURL: "https://perplexity.ai/favicon.ico"
-    preset:
-      endpoint: "Search"
-      model: "perplexity/sonar"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.7
-      modelLabel: "General Research Sonar"
-      greeting: |
-        I'm your general research assistant, ready to help find accurate information.
-        I can search and synthesize information from various sources.
-      promptPrefix: |
-        You are a research assistant.
-        Focus on:
-        - Finding and synthesizing information from reliable sources
-        - Providing well-documented, factual information
-        - Analyzing information from multiple perspectives
-        - Drawing logical conclusions based on evidence
-        - Citing sources appropriately
+    # General Research
+    - name: "general-research-sonar"
+      label: "General Research (Sonar)"
+      default: true
+      description: "Fast and accurate general research assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.7
+        modelLabel: "General Research Sonar"
+        greeting: |
+          I'm your general research assistant, ready to help find accurate information.
+          I can search and synthesize information from various sources.
+        promptPrefix: |
+          You are a research assistant.
+          Focus on:
+          - Finding and synthesizing information from reliable sources
+          - Providing well-documented, factual information
+          - Analyzing information from multiple perspectives
+          - Drawing logical conclusions based on evidence
+          - Citing sources appropriately
 
-  # GPT-4o Mini Search
-  - name: "general-research-gpt4"
-    label: "General Research (GPT-4o Mini)"
-    description: "Advanced general research with GPT-4o Mini"
-    iconURL: "https://perplexity.ai/favicon.ico"
-    preset:
-      endpoint: "Search"
-      model: "openai/gpt-4o-mini-search-preview"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.7
-      modelLabel: "General Research GPT-4o"
-      greeting: |
-        I'm your GPT-4o Mini powered research assistant.
-        I can help find and analyze information from various sources.
-      promptPrefix: |
-        You are a research assistant.
-        Focus on:
-        - Finding and synthesizing information from reliable sources
-        - Providing well-documented, factual information
-        - Analyzing information from multiple perspectives
-        - Drawing logical conclusions based on evidence
-        - Citing sources appropriately
+    # GPT-4o Mini Search
+    - name: "general-research-gpt4"
+      label: "General Research (GPT-4o Mini)"
+      description: "Advanced general research with GPT-4o Mini"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "openai/gpt-4o-mini-search-preview"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.7
+        modelLabel: "General Research GPT-4o"
+        greeting: |
+          I'm your GPT-4o Mini powered research assistant.
+          I can help find and analyze information from various sources.
+        promptPrefix: |
+          You are a research assistant.
+          Focus on:
+          - Finding and synthesizing information from reliable sources
+          - Providing well-documented, factual information
+          - Analyzing information from multiple perspectives
+          - Drawing logical conclusions based on evidence
+          - Citing sources appropriately
 
-  # Deep Research
-  - name: "deep-research-sonar"
-    label: "Deep Research (Sonar Deep)"
-    description: "In-depth research assistant"
-    iconURL: "https://perplexity.ai/favicon.ico"
-    preset:
-      endpoint: "Search"
-      model: "perplexity/sonar-deep-research"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.7
-      modelLabel: "Deep Research Sonar"
-      greeting: |
-        I'm your deep research assistant, ready to help with in-depth analysis.
-        I can perform thorough research and provide detailed insights.
-      promptPrefix: |
-        You are a deep research specialist.
-        Focus on:
-        - Conducting thorough, in-depth analysis
-        - Exploring multiple perspectives and viewpoints
-        - Identifying patterns and connections
-        - Providing detailed, well-sourced information
-        - Drawing comprehensive conclusions
+    # Deep Research
+    - name: "deep-research-sonar"
+      label: "Deep Research (Sonar Deep)"
+      description: "In-depth research assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar-deep-research"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.7
+        modelLabel: "Deep Research Sonar"
+        greeting: |
+          I'm your deep research assistant, ready to help with in-depth analysis.
+          I can perform thorough research and provide detailed insights.
+        promptPrefix: |
+          You are a deep research specialist.
+          Focus on:
+          - Conducting thorough, in-depth analysis
+          - Exploring multiple perspectives and viewpoints
+          - Identifying patterns and connections
+          - Providing detailed, well-sourced information
+          - Drawing comprehensive conclusions
 
-  # Reasoning Research
-  - name: "reasoning-research-sonar"
-    label: "Reasoning Research (Sonar Reasoning)"
-    description: "Advanced reasoning and analysis assistant"
-    iconURL: "https://perplexity.ai/favicon.ico"
-    preset:
-      endpoint: "Search"
-      model: "perplexity/sonar-reasoning-pro"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.7
-      modelLabel: "Reasoning Research Sonar"
-      greeting: |
-        I'm your reasoning research assistant, ready to help with complex analysis.
-        I can help analyze information and provide logical insights.
-      promptPrefix: |
-        You are a reasoning and analysis specialist.
-        Focus on:
-        - Analyzing information logically and systematically
-        - Identifying cause-and-effect relationships
-        - Evaluating arguments and evidence
-        - Drawing well-reasoned conclusions
-        - Considering implications and consequences
-  # Gemini 2.5 Flash
-  - name: "general-info-gemini"
-    label: "General Info Assistant (Gemini 2.5 Flash)"
-    default: true
-    description: "Fast and accurate general information assistant"
-    iconURL: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
-    preset:
-      endpoint: "General"
-      model: "google/gemini-2.5-flash-preview"
-      maxContextTokens: 64000
-      max_tokens: 2048
-      temperature: 0.7
-      modelLabel: "General Info Assistant"
-      greeting: |
-        I'm your general information assistant, ready to help with any questions you have.
-        I can provide accurate, well-researched information on various topics.
-      promptPrefix: |
-        You are a knowledgeable information assistant.
-        Focus on:
+    # Reasoning Research
+    - name: "reasoning-research-sonar"
+      label: "Reasoning Research (Sonar Reasoning)"
+      description: "Advanced reasoning and analysis assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar-reasoning-pro"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.7
+        modelLabel: "Reasoning Research Sonar"
+        greeting: |
+          I'm your reasoning research assistant, ready to help with complex analysis.
+          I can help analyze information and provide logical insights.
+        promptPrefix: |
+          You are a reasoning and analysis specialist.
+          Focus on:
+          - Analyzing information logically and systematically
+          - Identifying cause-and-effect relationships
+          - Evaluating arguments and evidence
+          - Drawing well-reasoned conclusions
+          - Considering implications and consequences
+    # Gemini 2.5 Flash
+    - name: "general-info-gemini"
+      label: "General Info Assistant (Gemini 2.5 Flash)"
+      default: true
+      description: "Fast and accurate general information assistant"
+      iconURL: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+      preset:
+        endpoint: "General"
+        model: "google/gemini-2.5-flash-preview"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.7
+        modelLabel: "General Info Assistant"
+        greeting: |
+          I'm your general information assistant, ready to help with any questions you have.
+          I can provide accurate, well-researched information on various topics.
+        promptPrefix: |
+          You are a knowledgeable information assistant.
+          Focus on:
+            - Providing accurate, well-researched information
+            - Explaining concepts clearly and concisely
+            - Citing reliable sources when appropriate
+            - Presenting balanced perspectives on controversial topics
+            - Breaking down complex topics into understandable parts
+
+    # Grok-3 Beta
+    - name: "general-info-grok"
+      label: "General Info Grok-3"
+      description: "Innovative general information assistant"
+      iconURL: "https://x.ai/favicon.ico"
+      preset:
+        endpoint: "General"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.7
+        modelLabel: "General Info Grok-3"
+        greeting: |
+          I'm your Grok-3 powered general information assistant.
+          I can help with innovative perspectives and creative solutions.
+        promptPrefix: |
+          You are a knowledgeable information assistant.
+          Focus on:
           - Providing accurate, well-researched information
           - Explaining concepts clearly and concisely
           - Citing reliable sources when appropriate
           - Presenting balanced perspectives on controversial topics
           - Breaking down complex topics into understandable parts
 
-  # Grok-3 Beta
-  - name: "general-info-grok"
-    label: "General Info Grok-3"
-    description: "Innovative general information assistant"
-    iconURL: "https://x.ai/favicon.ico"
-    preset:
-      endpoint: "General"
-      model: "x-ai/grok-3-beta"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.7
-      modelLabel: "General Info Grok-3"
-      greeting: |
-        I'm your Grok-3 powered general information assistant.
-        I can help with innovative perspectives and creative solutions.
-      promptPrefix: |
-        You are a knowledgeable information assistant.
-        Focus on:
-        - Providing accurate, well-researched information
-        - Explaining concepts clearly and concisely
-        - Citing reliable sources when appropriate
-        - Presenting balanced perspectives on controversial topics
-        - Breaking down complex topics into understandable parts
-
-  # Deepseek V3
-  - name: "general-info-deepseek"
-    label: "General Info Deepseek V3"
-    description: "Deep learning powered general information assistant"
-    iconURL: "https://deepseek.ai/favicon.ico"
-    preset:
-      endpoint: "General"
-      model: "deepseek/deepseek-chat-v3-0324"
-      maxContextTokens: 128000
-      max_tokens: 4096
-      temperature: 0.7
-      modelLabel: "General Info Deepseek"
-      greeting: |
-        I'm your Deepseek V3 powered general information assistant.
-        I can help with detailed analysis and comprehensive information.
-      promptPrefix: |
-        You are a knowledgeable information assistant.
-        Focus on:
-        - Providing accurate, well-researched information
-        - Explaining concepts clearly and concisely
-        - Citing reliable sources when appropriate
-        - Presenting balanced perspectives on controversial topics
-        - Breaking down complex topics into understandable parts
+    # Deepseek V3
+    - name: "general-info-deepseek"
+      label: "General Info Deepseek V3"
+      description: "Deep learning powered general information assistant"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "General"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.7
+        modelLabel: "General Info Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered general information assistant.
+          I can help with detailed analysis and comprehensive information.
+        promptPrefix: |
+          You are a knowledgeable information assistant.
+          Focus on:
+          - Providing accurate, well-researched information
+          - Explaining concepts clearly and concisely
+          - Citing reliable sources when appropriate
+          - Presenting balanced perspectives on controversial topics
+          - Breaking down complex topics into understandable parts
