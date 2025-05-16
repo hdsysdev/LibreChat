@@ -7,7 +7,7 @@ registration:
     - "github"
 
 interface:
-  customWelcome: "Welcome to SlopAI {{user.name}}! Where we slop, you slurp."
+  customWelcome: "Welcome to SlopAI {{user.name}}! What kind of slop would you like me to generate for you today?"
   runCode: false
   agents: true
   modelSelect: true
@@ -221,7 +221,7 @@ endpoints:
       
 modelSpecs:
   enforce: false
-  prioritize: true
+  prioritize: false
   list:
     # Gemini 2.5 Pro Expert
     - name: "kotlin-multiplatform-expert"
@@ -693,3 +693,160 @@ modelSpecs:
           - Citing reliable sources when appropriate
           - Presenting balanced perspectives on controversial topics
           - Breaking down complex topics into understandable parts
+
+    # Laravel Vue PrimeNG Expert
+    - name: "laravel-vue-primeng-expert"
+      label: "Laravel Vue PrimeNG Expert (Gemini 2.5 Pro)"
+      description: "Advanced Laravel, Vue.js, and PrimeNG development assistant"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Expert"
+        greeting: |
+          I'm your expert Laravel, Vue.js, and PrimeNG development assistant.
+          I can help you build modern web applications using Laravel for the backend, Vue.js for the frontend, and PrimeNG for beautiful UI components.
+          Feel free to ask any questions about Laravel, Vue.js, PrimeNG, or related technologies.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Laravel Vue PrimeNG Thinking
+    - name: "laravel-vue-primeng-thinking"
+      label: "Laravel Vue PrimeNG Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Laravel, Vue.js, and PrimeNG assistant for quick solutions"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Thinking"
+        greeting: |
+          I'm your fast-thinking Laravel, Vue.js, and PrimeNG assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # GPT-4o Latest
+    - name: "laravel-vue-primeng-gpt4"
+      label: "Laravel Vue PrimeNG GPT-4 (Latest)"
+      description: "Advanced Laravel, Vue.js, and PrimeNG development with GPT-4"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # O4 Mini
+    - name: "laravel-vue-primeng-o4mini"
+      label: "Laravel Vue PrimeNG O4 Mini"
+      description: "Efficient Laravel, Vue.js, and PrimeNG development with O4 Mini"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG O4 Mini"
+        greeting: |
+          I'm your O4 Mini powered Laravel, Vue.js, and PrimeNG assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Grok-3 Beta
+    - name: "laravel-vue-primeng-grok"
+      label: "Laravel Vue PrimeNG Grok-3"
+      description: "Innovative Laravel, Vue.js, and PrimeNG development with Grok-3"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Deepseek V3
+    - name: "laravel-vue-primeng-deepseek"
+      label: "Laravel Vue PrimeNG Deepseek V3"
+      description: "Deep learning powered Laravel, Vue.js, and PrimeNG development"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
