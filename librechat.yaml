@@ -13,22 +13,19 @@ interface:
   modelSelect: true
   parameters: true
   presets: true
-
+  
 speech:
   stt:
     openai:
       url: 'http://host.docker.internal:8000/v1/audio/transcriptions'
-      model: "Systran/faster-whisper-small"
+      apiKey: 'speeches_api_key'
+      model: 'whisper-1'
   tts:
     openai:
-      url: 'http://host.docker.internal:8000/v1/audio/speech'
-      apiKey: "EMPTY"
-      model: "rhasspy/piper-voices"
-      voices:
-        - "en_US/amy/medium"
-        - "en_US/amy/low"
-      # optional: which voice to auto-select in the UI
-      defaultVoice: "en_US/amy/medium"
+      url: 'http://speaches:5000/v1/audio/synthesize'
+      apiKey: 'speeches_api_key'
+      model: 'tts-1'
+      voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
 
       
 
