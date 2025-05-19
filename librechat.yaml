@@ -13,16 +13,16 @@ interface:
   modelSelect: true
   parameters: true
   presets: true
-  
+
 speech:
   stt:
     openai:
-      url: 'http://host.docker.internal:8000/v1/audio/transcriptions'
+      url: 'http://speaches:8000/v1/audio/transcriptions'
       apiKey: 'speeches_api_key'
       model: 'whisper-1'
   tts:
     openai:
-      url: 'http://speaches:5000/v1/audio/synthesize'
+      url: 'http://speaches:8000/v1/audio/synthesize'
       apiKey: 'speeches_api_key'
       model: 'tts-1'
       voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
