@@ -19,13 +19,13 @@ speech:
     openai:
       url: 'http://speaches:8000/v1/audio/transcriptions'
       apiKey: 'speeches_api_key'
-      model: 'whisper-1'
+      model: 'faster-whisper-small'
   tts:
     openai:
       url: 'http://speaches:8000/v1/audio/synthesize'
       apiKey: 'speeches_api_key'
-      model: 'tts-1'
-      voices: ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer']
+      model: 'piper'
+      voices: ['en_GB-aru-medium', 'en_GB-alan-medium', 'en_GB-alba-medium']
 
       
 

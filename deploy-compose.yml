@@ -21,6 +21,8 @@ services:
     volumes:
       # persist downloaded models so you don't re-download every time
       - tts-hf-cache:/root/.cache/huggingface/hub
+      - ../models:/app/models
+      - ./speeches-config.yaml:/app/config.yaml
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://0.0.0.0:8000/health"]
       interval: 30s
