@@ -17,6 +17,7 @@ services:
       # Optional: turn off auth if your librechat instance is public
       - SPEECHES_NO_AUTH=1
       - LOG_LEVEL=debug
+      - SPEACHES_API_KEY=speeches_api_key
     volumes:
       # persist downloaded models so you don't re-download every time
       - tts-hf-cache:/root/.cache/huggingface/hub
@@ -26,24 +27,6 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5s
-    entrypoint: >
-      /bin/bash -eux -c "
-        # 1) Download Kokoro ONNX model (346MB) + voices.bin (5.5MB)
-        huggingface-cli download hexgrad/Kokoro-82M \
-          --include 'kokoro-v0_19.onnx' \
-          --revision $KOKORO_REVISION &&
-
-        mkdir -p /root/.cache/huggingface/hub/models--hexgrad--Kokoro-82M/snapshots/$KOKORO_REVISION && 
-        curl -L \
-          https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files/voices.bin \
-          -o /root/.cache/huggingface/hub/models--hexgrad--Kokoro-82M/snapshots/$KOKORO_REVISION/voices.bin &&
-
-        # 2) Download all Piper voices (~7.7GB).  If you only want English, swap this for the --include examples
-        huggingface-cli download rhasspy/piper-voices &&
-
-        # 3) Launch the Speeches FastAPI app
-        uvicorn main:app --host 0.0.0.0 --port 8000
-      "
   api:
     # build:
     #   context: .
