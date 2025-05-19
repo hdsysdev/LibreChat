@@ -1,0 +1,7 @@
+stt:
+  model: 'faster-whisper-small'
+  path: '/app/models/faster-whisper-small'
+
+tts:
+  model: 'piper'
+  path: '/app/models/en_GB-alan-medium'
