@@ -4,7 +4,7 @@ services:
   # 1) The Speeches TTS server
   # -------------------------------------------------------------------
   speeches:
-    image: ghcr.io/acheong08/speeches:latest   # replace with the correct Speeches image if yours is different
+    image: ghcr.io/speaches-ai/speaches:latest-cpu   # replace with the correct Speeches image if yours is different
     container_name: speeches
     restart: unless-stopped  
     ports:
@@ -16,9 +16,16 @@ services:
       - KOKORO_REVISION=c97b7bbc3e60f447383c79b2f94fee861ff156ac
       # Optional: turn off auth if your librechat instance is public
       - SPEECHES_NO_AUTH=1
+      - LOG_LEVEL=debug
     volumes:
       # persist downloaded models so you don't re-download every time
       - tts-hf-cache:/root/.cache/huggingface/hub
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://0.0.0.0:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
     entrypoint: >
       /bin/bash -eux -c "
         # 1) Download Kokoro ONNX model (346MB) + voices.bin (5.5MB)
