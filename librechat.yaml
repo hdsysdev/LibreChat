@@ -18,12 +18,12 @@ speech:
   stt:
     openai:
       url: 'http://speaches:8000/v1/audio/transcriptions'
-      apiKey: 'speeches_api_key'
+      apiKey: 'speaches_api_key'
       model: 'faster-whisper-small'
   tts:
     openai:
       url: 'http://speaches:8000/v1/audio/synthesize'
-      apiKey: 'speeches_api_key'
+      apiKey: 'speaches_api_key'
       model: 'piper'
       voices: ['en_GB-aru-medium', 'en_GB-alan-medium', 'en_GB-alba-medium']
 
