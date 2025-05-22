@@ -19,13 +19,13 @@ speech:
     openai:
       url: 'http://speaches:8000/v1/audio/transcriptions'
       apiKey: 'speaches_api_key'
-      model: 'faster-whisper-small'
+      model: 'small.en'
   tts:
     openai:
-      url: 'http://speaches:8000/v1/audio/synthesize'
+      url: 'http://speaches:8000/v1/audio/speech'
       apiKey: 'speaches_api_key'
-      model: 'piper'
-      voices: ['en_GB-aru-medium', 'en_GB-alan-medium', 'en_GB-alba-medium']
+      model: 'tts-1'
+      voices: ['af_heart', 'af_alloy']
 
       
 
@@ -242,7 +242,7 @@ modelSpecs:
       label: "Kotlin Multiplatform Expert (Gemini 2.5 Pro)"
       default: true
       description: "Advanced Kotlin Multiplatform development assistant with Compose for Android and iOS"
-      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
       preset:
         endpoint: "Programming"
         model: "google/gemini-2.5-pro-exp-03-25"
@@ -268,7 +268,7 @@ modelSpecs:
     - name: "kotlin-multiplatform-thinking"
       label: "Kotlin Multiplatform Thinking (Gemini 2.5 Flash)"
       description: "Fast-thinking Kotlin Multiplatform assistant for quick solutions"
-      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
       preset:
         endpoint: "Programming"
         model: "google/gemini-2.5-flash-preview:thinking"
@@ -293,7 +293,7 @@ modelSpecs:
     - name: "kotlin-multiplatform-gpt4"
       label: "Kotlin Multiplatform GPT-4 (Latest)"
       description: "Advanced Kotlin Multiplatform development with GPT-4"
-      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
       preset:
         endpoint: "Programming"
         model: "openai/chatgpt-4o-latest"
@@ -318,7 +318,7 @@ modelSpecs:
     - name: "kotlin-multiplatform-o4mini"
       label: "Kotlin Multiplatform O4 Mini"
       description: "Efficient Kotlin Multiplatform development with O4 Mini"
-      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
       preset:
         endpoint: "Programming"
         model: "openai/o4-mini"
@@ -343,7 +343,7 @@ modelSpecs:
     - name: "kotlin-multiplatform-grok"
       label: "Kotlin Multiplatform Grok-3"
       description: "Innovative Kotlin Multiplatform development with Grok-3"
-      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/public/images/kotlin-logo.svg"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
       preset:
         endpoint: "Programming"
         model: "x-ai/grok-3-beta"
