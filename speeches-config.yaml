@@ -3,5 +3,5 @@ stt:
   path: '/app/models/faster-whisper-small'
 
 tts:
-  model: 'piper'
-  path: '/app/models/en_GB-alan-medium'
+  model: 'kokoro'
+  repository: 'speaches-ai/Kokoro-82M-v1.0-ONNX'

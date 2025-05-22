@@ -1,10 +1,10 @@
 services:
  
   # -------------------------------------------------------------------
-  # 1) The Speaches TTS server
+  # Speaches TTS server
   # -------------------------------------------------------------------
   speaches:
-    image: ghcr.io/speaches-ai/speaches:0.6.2   # replace with the correct Speaches image if yours is different
+    image: ghcr.io/speaches-ai/speaches:0.8.0-rc.2-cpu   # replace with the correct Speaches image if yours is different
     container_name: speaches
     restart: unless-stopped  
     ports:
@@ -18,12 +18,14 @@ services:
       - SPEACHES_NO_AUTH=1
       - LOG_LEVEL=debug
       - SPEACHES_API_KEY=speaches_api_key
+      - OPENAI_BASE_URL=http://localhost:8000/v1/
+      - OPENAI_API_KEY="speaches_api_key"
+      - TTS_ENDPOINT=http://localhost:8000
     volumes:
-      # persist downloaded models so you don't re-download every time
-      - tts-hf-cache:/root/.cache/huggingface/hub
-      - ../hf-cache:/home/ubuntu/.cache/huggingface/hub
-      - ../models:/app/models
-      - ./speaches-config.yaml:/app/config.yaml
+      - hf-hub-cache:/root/.cache/huggingface/hub
+      - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
+      - ~/speaches-models:/app/models
+
   api:
     # build:
     #   context: .
@@ -49,6 +51,10 @@ services:
       - MEILI_HOST=http://meilisearch:7700
       - RAG_PORT=${RAG_PORT:-8000}
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
+      - DEBUG=true
+      - LOG_LEVEL=debug
+      - OPENAI_BASE_URL=http://localhost:8000/v1/
+      - OPENAI_API_KEY="speaches_api_key"
     volumes:
       - type: bind
         source: ./librechat.yaml
@@ -116,4 +122,4 @@ services:
 
 volumes:
   pgdata2:
-  tts-hf-cache:
+  hf-hub-cache:
