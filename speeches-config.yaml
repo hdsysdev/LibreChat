@@ -1,6 +1,5 @@
 stt:
-  model: 'faster-whisper-small'
-  path: '/app/models/faster-whisper-small'
+  model: 'small.en'
 
 tts:
   model: 'kokoro'
