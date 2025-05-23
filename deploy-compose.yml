@@ -10,21 +10,31 @@ services:
     ports:
       - "8000:8000"                            # Speaches serves on 8000/v1/audio/speech
     environment:
-      # So that huggingface-cli can pull private models if needed:
       - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN:-""}
-      # Fixed revision for the Kokoro ONNX release
       - KOKORO_REVISION=c97b7bbc3e60f447383c79b2f94fee861ff156ac
-      # Optional: turn off auth if your librechat instance is public
       - SPEACHES_NO_AUTH=1
       - LOG_LEVEL=debug
       - SPEACHES_API_KEY=speaches_api_key
-      - OPENAI_BASE_URL=http://localhost:8000/v1/
+      - OPENAI_BASE_URL=http://speaches:8000/v1/
       - OPENAI_API_KEY="speaches_api_key"
-      - TTS_ENDPOINT=http://localhost:8000
+      - WHISPER__USE_BATCHED_MODE=true
+      - WHISPER__COMPUTE_TYPE=float32
+      - WHISPER__CPU_THREADS=6
+      - CHAT_COMPLETION_BASE_URL=http://localhost:11434
+      - CHAT_COMPLETION_API_KEY=speaches_api_key
+      - LOOPBACK_HOST_URL=http://0.0.0.0:8000
+      - ENABLE_UI=false
+      
     volumes:
       - hf-hub-cache:/root/.cache/huggingface/hub
       - hf-hub-cache:/home/ubuntu/.cache/huggingface/hub
-      - ~/speaches-models:/app/models
+      - ~/models:/app/models
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://0.0.0.0:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
   api:
     # build:
@@ -53,7 +63,7 @@ services:
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
       - DEBUG=true
       - LOG_LEVEL=debug
-      - OPENAI_BASE_URL=http://localhost:8000/v1/
+      - OPENAI_BASE_URL=http://speaches:8000/v1/
       - OPENAI_API_KEY="speaches_api_key"
     volumes:
       - type: bind

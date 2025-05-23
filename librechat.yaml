@@ -19,7 +19,7 @@ speech:
     openai:
       url: 'http://speaches:8000/v1/audio/transcriptions'
       apiKey: 'speaches_api_key'
-      model: 'small.en'
+      model: 'Systran/faster-whisper-small.en'
   tts:
     openai:
       url: 'http://speaches:8000/v1/audio/speech'
