@@ -20,7 +20,7 @@ services:
       - WHISPER__USE_BATCHED_MODE=true
       - WHISPER__COMPUTE_TYPE=float32
       - WHISPER__CPU_THREADS=6
-      - CHAT_COMPLETION_BASE_URL=http://localhost:11434
+      - CHAT_COMPLETION_BASE_URL=http://localhost:11434/v1
       - CHAT_COMPLETION_API_KEY=speaches_api_key
       - LOOPBACK_HOST_URL=http://0.0.0.0:8000
       - ENABLE_UI=false
