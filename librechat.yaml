@@ -78,10 +78,6 @@ webSearch:
 
 
 endpoints:
-  agents:
-    disableBuilder: false
-    capabilities: ["execute_code", "file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
-
   custom:
     # OpenRouter - Programming
     - name: "Programming"
@@ -101,9 +97,7 @@ endpoints:
           - "deepseek/deepseek-r1"
           - "anthropic/claude-3.7-sonnet"
           - "anthropic/claude-3.7-sonnet:thinking"
-        fetch: false
-      dropParams:
-        - "stop"
+        fetch: true
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -122,9 +116,7 @@ endpoints:
           - "openai/gpt-4o-search-preview"
           - "perplexity/sonar-pro"
           - "perplexity/r1-1776"
-        fetch: false
-      dropParams:
-        - "stop"
+        fetch: true
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -143,9 +135,7 @@ endpoints:
           - "x-ai/grok-3-beta"
           - "google/gemini-2.5-pro-exp-03-25"
           
-        fetch: false
-      dropParams:
-        - "stop"
+        fetch: true
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -153,6 +143,7 @@ endpoints:
       forcePrompt: false
     # OpenRouter - Preset
     - name: "OpenRouter"
+      modelDisplayLabel: "OpenRouter"
       apiKey: "${OPENROUTER_KEY}"
       baseURL: "https://openrouter.ai/api/v1"
       models:
@@ -257,9 +248,7 @@ endpoints:
           - "x-ai/grok-3-mini-beta"
           - "x-ai/grok-beta"
           - "x-ai/grok-vision-beta"
-        fetch: false
-      dropParams:
-        - "stop"
+        fetch: true
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -273,44 +262,25 @@ endpoints:
         default:
           - "openrouter/auto"
         fetch: true
-      dropParams:
-        - "stop"
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
       summaryModel: "openai/gpt-3.5-turbo"
       forcePrompt: false
+  agents:
+    disableBuilder: false
+    capabilities: ["execute_code", "file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
+
       
 modelSpecs:
   enforce: false
-  prioritize: false
-  addedEndpoints: ["agents", "assistants"]
+  prioritize: true
   list:
     # Agents
     - name: "Agents"
       label: "Agents"
       preset:
         endpoint: "agents"
-    - name: "grok-3-agents"
-      label: "Grok-3 - Agents"
-      description: "Agents powered by Grok 3"
-      iconURL: "https://x.ai/favicon.ico"
-      preset:
-        endpoint: "agents"
-        model: "x-ai/grok-3-beta"
-        maxContextTokens: 128000
-        max_tokens: 4096
-        temperature: 0.1
-        modelLabel: "General Info Grok-3"
-        greeting: |
-          I'm your Grok-3 powered agent.
-        promptPrefix: |
-          You are a knowledgeable assistant.
-          Focus on:
-          - Providing accurate, well-researched information
-          - Explaining concepts clearly and concisely
-          - Citing reliable sources when appropriate
-          - Breaking down complex topics into understandable parts
         # Gemini 2.5 Flash
     - name: "general-info-gemini"
       label: "General Info Assistant (Gemini 2.5 Flash)"
@@ -364,7 +334,7 @@ modelSpecs:
       label: "General Info Deepseek V3"
       description: "Deep learning powered general information assistant"
       iconURL: "https://deepseek.ai/favicon.ico"
-      default: true
+      default: false
       preset:
         endpoint: "General"
         model: "deepseek/deepseek-chat-v3-0324"
@@ -935,3 +905,4 @@ modelSpecs:
           - Evaluating arguments and evidence
           - Drawing well-reasoned conclusions
           - Considering implications and consequences
+  addedEndpoints: ["custom", "agents"]
