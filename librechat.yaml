@@ -9,23 +9,41 @@ registration:
 interface:
   customWelcome: "Welcome to SlopAI {{user.name}}! What kind of slop would you like me to generate for you today?"
   runCode: false
+  agentBuilder: true
   agents: true
   modelSelect: true
   parameters: true
   presets: true
+  endpointsMenu: true
+  sidePanel: true
+  disableBuilder: false
+
+# speech:
+#   stt:
+#     openai:
+#       url: 'http://speaches:8000/v1/audio/transcriptions'
+#       apiKey: 'speaches_api_key'
+#       model: 'Systran/faster-whisper-tiny.en'
+#   tts:
+#     openai:
+#       url: 'http://speaches:8000/v1/audio/speech'
+#       apiKey: 'speaches_api_key'
+#       model: 'tts-1'
+#       voices: ['af_heart', 'af_alloy']
+
 
 speech:
   stt:
     openai:
-      url: 'http://speaches:8000/v1/audio/transcriptions'
-      apiKey: 'speaches_api_key'
-      model: 'Systran/faster-whisper-tiny.en'
+      url: 'https://api.lemonfox.ai/v1/audio/transcriptions'
+      apiKey: 'hDhg7ykWjIuy4owZXSXeWTtkIGa6DgZs='
+      model: 'whisper-1'
   tts:
     openai:
-      url: 'http://speaches:8000/v1/audio/speech'
-      apiKey: 'speaches_api_key'
-      model: 'tts-1'
-      voices: ['af_heart', 'af_alloy']
+      url: 'https://api.lemonfox.ai/v1/audio/speech'
+      apiKey: 'hDhg7ykWjIuy4owZXSXeWTtkIGa6DgZs'
+      # model: 'tts-1'
+      voices: ['alice', 'emma', 'fable', 'daniel', 'lewis', 'george']
 
       
 
@@ -62,6 +80,8 @@ webSearch:
 endpoints:
   agents:
     disableBuilder: false
+    capabilities: ["execute_code", "file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
+
   custom:
     # OpenRouter - Programming
     - name: "Programming"
@@ -264,11 +284,37 @@ endpoints:
 modelSpecs:
   enforce: false
   prioritize: false
+  addedEndpoints: ["agents", "assistants"]
   list:
+    # Agents
+    - name: "Agents"
+      label: "Agents"
+      preset:
+        endpoint: "agents"
+    - name: "grok-3-agents"
+      label: "Grok-3 - Agents"
+      description: "Agents powered by Grok 3"
+      iconURL: "https://x.ai/favicon.ico"
+      preset:
+        endpoint: "agents"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "General Info Grok-3"
+        greeting: |
+          I'm your Grok-3 powered agent.
+        promptPrefix: |
+          You are a knowledgeable assistant.
+          Focus on:
+          - Providing accurate, well-researched information
+          - Explaining concepts clearly and concisely
+          - Citing reliable sources when appropriate
+          - Breaking down complex topics into understandable parts
         # Gemini 2.5 Flash
     - name: "general-info-gemini"
       label: "General Info Assistant (Gemini 2.5 Flash)"
-      default: true
+      default: false
       description: "Fast and accurate general information assistant"
       iconURL: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
       preset:
@@ -276,7 +322,7 @@ modelSpecs:
         model: "google/gemini-2.5-flash-preview"
         maxContextTokens: 64000
         max_tokens: 2048
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "General Info Assistant"
         greeting: |
           I'm your general information assistant, ready to help with any questions you have.
@@ -287,7 +333,6 @@ modelSpecs:
             - Providing accurate, well-researched information
             - Explaining concepts clearly and concisely
             - Citing reliable sources when appropriate
-            - Presenting balanced perspectives on controversial topics
             - Breaking down complex topics into understandable parts
 
     # Grok-3 Beta
@@ -295,13 +340,13 @@ modelSpecs:
       label: "General Info Grok-3"
       description: "Innovative general information assistant"
       iconURL: "https://x.ai/favicon.ico"
-      default: true
+      default: false
       preset:
         endpoint: "General"
         model: "x-ai/grok-3-beta"
         maxContextTokens: 128000
         max_tokens: 4096
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "General Info Grok-3"
         greeting: |
           I'm your Grok-3 powered general information assistant.
@@ -312,7 +357,6 @@ modelSpecs:
           - Providing accurate, well-researched information
           - Explaining concepts clearly and concisely
           - Citing reliable sources when appropriate
-          - Presenting balanced perspectives on controversial topics
           - Breaking down complex topics into understandable parts
 
     # Deepseek V3
@@ -320,12 +364,13 @@ modelSpecs:
       label: "General Info Deepseek V3"
       description: "Deep learning powered general information assistant"
       iconURL: "https://deepseek.ai/favicon.ico"
+      default: true
       preset:
         endpoint: "General"
         model: "deepseek/deepseek-chat-v3-0324"
         maxContextTokens: 128000
         max_tokens: 4096
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "General Info Deepseek"
         greeting: |
           I'm your Deepseek V3 powered general information assistant.
@@ -336,7 +381,6 @@ modelSpecs:
           - Providing accurate, well-researched information
           - Explaining concepts clearly and concisely
           - Citing reliable sources when appropriate
-          - Presenting balanced perspectives on controversial topics
           - Breaking down complex topics into understandable parts
 
     # Laravel Vue PrimeNG Expert
@@ -806,7 +850,7 @@ modelSpecs:
         model: "perplexity/sonar"
         maxContextTokens: 64000
         max_tokens: 2048
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "General Research Sonar"
         greeting: |
           I'm your general research assistant, ready to help find accurate information.
@@ -830,7 +874,7 @@ modelSpecs:
         model: "openai/gpt-4o-mini-search-preview"
         maxContextTokens: 64000
         max_tokens: 2048
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "General Research GPT-4o"
         greeting: |
           I'm your GPT-4o Mini powered research assistant.
@@ -854,7 +898,7 @@ modelSpecs:
         model: "perplexity/sonar-deep-research"
         maxContextTokens: 128000
         max_tokens: 4096
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "Deep Research Sonar"
         greeting: |
           I'm your deep research assistant, ready to help with in-depth analysis.
@@ -878,7 +922,7 @@ modelSpecs:
         model: "perplexity/sonar-reasoning-pro"
         maxContextTokens: 128000
         max_tokens: 4096
-        temperature: 0.7
+        temperature: 0.1
         modelLabel: "Reasoning Research Sonar"
         greeting: |
           I'm your reasoning research assistant, ready to help with complex analysis.
