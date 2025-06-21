@@ -2,10 +2,6 @@ version: 1.2.1
 
 cache: true
 
-registration:
-  socialLogins:
-    - "github"
-
 interface:
   customWelcome: "Welcome to SlopAI {{user.name}}! What kind of slop would you like me to generate for you today?"
   runCode: false
@@ -16,7 +12,7 @@ interface:
   presets: true
   endpointsMenu: true
   sidePanel: true
-  disableBuilder: false
+
 
 # speech:
 #   stt:
@@ -42,7 +38,7 @@ speech:
     openai:
       url: 'https://api.lemonfox.ai/v1/audio/speech'
       apiKey: 'hDhg7ykWjIuy4owZXSXeWTtkIGa6DgZs'
-      # model: 'tts-1'
+      model: 'tts-1'
       voices: ['alice', 'emma', 'fable', 'daniel', 'lewis', 'george']
 
       
@@ -53,7 +49,48 @@ speech:
 
 mcpServers:
   context7:
-    url: https://mcp.context7.com/mcp
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@upstash/context7-mcp"  
+  sequentialthinking:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-sequential-thinking"
+  fetch:
+    type: stdio
+    command: uvx
+    args:
+      - -y
+      - mcp-server-fetch
+  deepWiki:
+    type: streamable-http
+    url: https://mcp.deepwiki.com/mcp
+  memory:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-memory"
+    env:
+      MEMORY_FILE_PATH: "/app/client/memory/memory.json"
+  agentql:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - agentql-mcp
+    env:
+      AGENTQL_API_KEY: "${AGENTQL_API_KEY}"
+  time:
+    type: stdio
+    command: uvx
+    args:
+      - -y
+      - mcp-server-time
   puppeteer:
     type: stdio
     command: npx
@@ -67,6 +104,7 @@ mcpServers:
       stderr: inherit
   everything:
     url: http://localhost:3001/sse
+
 
 webSearch:
   serperApiKey: "${SERPER_API_KEY}"
@@ -97,7 +135,7 @@ endpoints:
           - "deepseek/deepseek-r1"
           - "anthropic/claude-3.7-sonnet"
           - "anthropic/claude-3.7-sonnet:thinking"
-        fetch: true
+        fetch: false
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -116,7 +154,7 @@ endpoints:
           - "openai/gpt-4o-search-preview"
           - "perplexity/sonar-pro"
           - "perplexity/r1-1776"
-        fetch: true
+        fetch: false
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -135,7 +173,7 @@ endpoints:
           - "x-ai/grok-3-beta"
           - "google/gemini-2.5-pro-exp-03-25"
           
-        fetch: true
+        fetch: false
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -248,7 +286,7 @@ endpoints:
           - "x-ai/grok-3-mini-beta"
           - "x-ai/grok-beta"
           - "x-ai/grok-vision-beta"
-        fetch: true
+        fetch: false
       titleConvo: true
       titleModel: "openai/gpt-3.5-turbo"
       summarize: false
@@ -269,19 +307,31 @@ endpoints:
       forcePrompt: false
   agents:
     disableBuilder: false
-    capabilities: ["execute_code", "file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
+    recursionLimit: 50
+    maxRecursionLimit: 100
+    capabilities: ["file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
+    allowedProviders:
+      - openAI
+      - azureOpenAI
+      - google
+      - anthropic
+      - assistants
+      - azureAssistants
+      - bedrock
+      - General
+      - Search
+      - Programming
+      - OpenRouter
+      - OpenRouter - Fetch All
+      - custom
 
       
 modelSpecs:
   enforce: false
-  prioritize: true
+  prioritize: false
+  # addedEndpoints: ["custom", "agents", "General", "Search", "Programming",OpenRouter", "OpenRouter - Fetch All"]
   list:
-    # Agents
-    - name: "Agents"
-      label: "Agents"
-      preset:
-        endpoint: "agents"
-        # Gemini 2.5 Flash
+    # Gemini 2.5 Flash
     - name: "general-info-gemini"
       label: "General Info Assistant (Gemini 2.5 Flash)"
       default: false
@@ -334,7 +384,7 @@ modelSpecs:
       label: "General Info Deepseek V3"
       description: "Deep learning powered general information assistant"
       iconURL: "https://deepseek.ai/favicon.ico"
-      default: false
+      default: true
       preset:
         endpoint: "General"
         model: "deepseek/deepseek-chat-v3-0324"
@@ -664,7 +714,7 @@ modelSpecs:
     - name: "spring-boot-expert"
       label: "Spring Boot Expert (Gemini 2.5 Pro)"
       description: "Advanced Spring Boot development assistant with Kotlin"
-      iconURL: "https://spring.io/images/spring-logo.svg"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "google/gemini-2.5-pro-exp-03-25"
@@ -689,7 +739,7 @@ modelSpecs:
     - name: "spring-boot-thinking"
       label: "Spring Boot Thinking (Gemini 2.5 Flash)"
       description: "Fast-thinking Spring Boot assistant for quick solutions"
-      iconURL: "https://spring.io/images/spring-logo.svg"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "google/gemini-2.5-flash-preview:thinking"
@@ -714,7 +764,7 @@ modelSpecs:
     - name: "spring-boot-gpt4"
       label: "Spring Boot GPT-4 (Latest)"
       description: "Advanced Spring Boot development with GPT-4"
-      iconURL: "https://spring.io/images/spring-logo.svg"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "openai/chatgpt-4o-latest"
@@ -739,7 +789,7 @@ modelSpecs:
     - name: "spring-boot-o4mini"
       label: "Spring Boot O4 Mini"
       description: "Efficient Spring Boot development with O4 Mini"
-      iconURL: "https://spring.io/images/spring-logo.svg"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "openai/o4-mini"
@@ -764,7 +814,7 @@ modelSpecs:
     - name: "spring-boot-grok"
       label: "Spring Boot Grok-3"
       description: "Innovative Spring Boot development with Grok-3"
-      iconURL: "https://spring.io/images/spring-logo.svg"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "x-ai/grok-3-beta"
@@ -789,7 +839,7 @@ modelSpecs:
     - name: "spring-boot-deepseek"
       label: "Spring Boot Deepseek V3"
       description: "Deep learning powered Spring Boot development"
-      iconURL: "https://deepseek.ai/favicon.ico"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
       preset:
         endpoint: "Programming"
         model: "deepseek/deepseek-chat-v3-0324"
@@ -905,4 +955,8 @@ modelSpecs:
           - Evaluating arguments and evidence
           - Drawing well-reasoned conclusions
           - Considering implications and consequences
-  addedEndpoints: ["custom", "agents"]
+    - name: "Agents"
+      label: "Agents"
+      default: false
+      preset:
+        endpoint: "agents"
