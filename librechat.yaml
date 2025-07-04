@@ -17,12 +17,12 @@ interface:
 # speech:
 #   stt:
 #     openai:
-#       url: 'http://speaches:8000/v1/audio/transcriptions'
-#       apiKey: 'speaches_api_key'
+#       url: "http://speaches:8000/v1/audio/transcriptions"
+#       apiKey: "speaches_api_key'
 #       model: 'Systran/faster-whisper-tiny.en'
 #   tts:
 #     openai:
-#       url: 'http://speaches:8000/v1/audio/speech'
+#       url: "http://speaches:8000/v1/audio/speech"
 #       apiKey: 'speaches_api_key'
 #       model: 'tts-1'
 #       voices: ['af_heart', 'af_alloy']
@@ -32,16 +32,14 @@ speech:
   stt:
     openai:
       url: 'https://api.lemonfox.ai/v1/audio/transcriptions'
-      apiKey: 'hDhg7ykWjIuy4owZXSXeWTtkIGa6DgZs='
+      apiKey: '09s7wYMI6vKhvbI4QgvqerzceWA3S1kw'
       model: 'whisper-1'
   tts:
     openai:
       url: 'https://api.lemonfox.ai/v1/audio/speech'
-      apiKey: 'hDhg7ykWjIuy4owZXSXeWTtkIGa6DgZs'
+      apiKey: '09s7wYMI6vKhvbI4QgvqerzceWA3S1kw'
       model: 'tts-1'
-      voices: ['alice', 'emma', 'fable', 'daniel', 'lewis', 'george']
-
-      
+      voices: ['alice', 'isabella', 'emma', 'fable', 'daniel', 'lewis', 'george']
 
   speechTab:
     conversationMode: true
@@ -77,6 +75,7 @@ mcpServers:
       - "@modelcontextprotocol/server-memory"
     env:
       MEMORY_FILE_PATH: "/app/client/memory/memory.json"
+  
   agentql:
     type: stdio
     command: npx
@@ -91,6 +90,21 @@ mcpServers:
     args:
       - -y
       - mcp-server-time
+  hass-mcp:
+    type: stdio
+    command: docker
+    args:
+      - run
+      - -i
+      - --rm
+      - -e
+      - HA_URL
+      - -e
+      - HA_TOKEN
+      - voska/hass-mcp
+    env:
+      HA_URL: "http://2a0a:ef40:c58:fa01:7fb9:1181:ad56:af37:8123"
+      HA_TOKEN: "YOUR_LONG_LIVED_TOKEN"
   puppeteer:
     type: stdio
     command: npx
@@ -137,9 +151,9 @@ endpoints:
           - "anthropic/claude-3.7-sonnet:thinking"
         fetch: false
       titleConvo: true
-      titleModel: "openai/gpt-3.5-turbo"
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
       summarize: false
-      summaryModel: "openai/gpt-3.5-turbo"
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
       forcePrompt: false
     # OpenRouter - Search
     - name: "Search"
@@ -156,9 +170,9 @@ endpoints:
           - "perplexity/r1-1776"
         fetch: false
       titleConvo: true
-      titleModel: "openai/gpt-3.5-turbo"
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
       summarize: false
-      summaryModel: "openai/gpt-3.5-turbo"
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
       forcePrompt: false
     # OpenRouter - General
     - name: "General"
@@ -175,9 +189,9 @@ endpoints:
           
         fetch: false
       titleConvo: true
-      titleModel: "openai/gpt-3.5-turbo"
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
       summarize: false
-      summaryModel: "openai/gpt-3.5-turbo"
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
       forcePrompt: false
     # OpenRouter - Preset
     - name: "OpenRouter"
@@ -288,9 +302,9 @@ endpoints:
           - "x-ai/grok-vision-beta"
         fetch: false
       titleConvo: true
-      titleModel: "openai/gpt-3.5-turbo"
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
       summarize: false
-      summaryModel: "openai/gpt-3.5-turbo"
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
       forcePrompt: false
     # OpenRouter Fetch Models
     - name: "OpenRouter - Fetch All"
@@ -301,9 +315,9 @@ endpoints:
           - "openrouter/auto"
         fetch: true
       titleConvo: true
-      titleModel: "openai/gpt-3.5-turbo"
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
       summarize: false
-      summaryModel: "openai/gpt-3.5-turbo"
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
       forcePrompt: false
   agents:
     disableBuilder: false
