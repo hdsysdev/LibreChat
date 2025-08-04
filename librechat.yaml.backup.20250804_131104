@@ -1,0 +1,742 @@
+version: 1.2.1
+
+cache: true
+
+interface:
+  customWelcome: "Welcome to SlopAI {{user.name}}! What kind of slop would you like me to generate for you today?"
+  runCode: false
+  agentBuilder: true
+  agents: true
+  modelSelect: true
+  parameters: true
+  presets: true
+  endpointsMenu: true
+  sidePanel: true
+
+
+# speech:
+#   stt:
+#     openai:
+#       url: "http://speaches:8000/v1/audio/transcriptions"
+#       apiKey: "speaches_api_key'
+#       model: 'Systran/faster-whisper-tiny.en'
+#   tts:
+#     openai:
+#       url: "http://speaches:8000/v1/audio/speech"
+#       apiKey: 'speaches_api_key'
+#       model: 'tts-1'
+#       voices: ['af_heart', 'af_alloy']
+
+
+speech:
+  stt:
+    openai:
+      url: 'https://api.lemonfox.ai/v1/audio/transcriptions'
+      apiKey: '09s7wYMI6vKhvbI4QgvqerzceWA3S1kw'
+      model: 'whisper-1'
+  tts:
+    openai:
+      url: 'https://api.lemonfox.ai/v1/audio/speech'
+      apiKey: '09s7wYMI6vKhvbI4QgvqerzceWA3S1kw'
+      model: 'tts-1'
+      voices: ['alice', 'isabella', 'emma', 'fable', 'daniel', 'lewis', 'george']
+
+  speechTab:
+    conversationMode: true
+    advancedMode: true
+
+mcpServers:
+  context7:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@upstash/context7-mcp"  
+  sequentialthinking:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-sequential-thinking"
+  deepWiki:
+    type: streamable-http
+    url: https://mcp.deepwiki.com/mcp
+  memory:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - "@modelcontextprotocol/server-memory"
+    env:
+      MEMORY_FILE_PATH: "/app/client/memory/memory.json"
+  agentql:
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - agentql-mcp
+    env:
+      AGENTQL_API_KEY: "${AGENTQL_API_KEY}"
+  time:
+    type: stdio
+    command: uvx
+    args:
+      - -y
+      - mcp-server-time
+
+
+webSearch:
+  serperApiKey: "${SERPER_API_KEY}"
+  searchProvider: "serper"
+  jinaApiKey: "${JINA_API_KEY}"
+  rerankerType: "jina"
+  firecrawlApiKey: "${FIRECRAWL_API_KEY}"
+  scraperType: "firecrawl"
+
+
+endpoints:
+  custom:
+    # OpenRouter - Programming
+    - name: "Programming"
+      apiKey: "${OPENROUTER_KEY}"
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        default:
+          - "google/gemini-2.5-pro-exp-03-25"
+          - "google/gemini-2.5-pro-preview-03-25"
+          - "openai/chatgpt-4o-latest"
+          - "openai/o4-mini"
+          - "x-ai/grok-3-beta"
+          - "x-ai/grok-4"
+          - "openai/gpt-4o-mini"
+          - "google/gemini-2.5-flash-preview"
+          - "google/gemini-2.5-flash-preview:thinking"
+          - "deepseek/deepseek-chat-v3-0324"
+          - "deepseek/deepseek-r1"
+          - "anthropic/claude-3.7-sonnet"
+          - "anthropic/claude-3.7-sonnet:thinking"
+        fetch: false
+      titleConvo: true
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
+      summarize: false
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
+      forcePrompt: false
+    # OpenRouter Fetch Models
+    - name: "OpenRouter - Fetch All"
+      apiKey: "${OPENROUTER_KEY}"
+      baseURL: "https://openrouter.ai/api/v1"
+      models:
+        default:
+          - "openrouter/auto"
+        fetch: true
+      titleConvo: true
+      titleModel: "openai/gpt-4.1-nano-2025-04-14"
+      summarize: false
+      summaryModel: "openai/gpt-4.1-nano-2025-04-14"
+      forcePrompt: false
+  agents:
+    disableBuilder: false
+    recursionLimit: 50
+    maxRecursionLimit: 100
+    # capabilities: ["file_search", "actions", "tools", "artifacts", "ocr", "chain", "web_search"]
+    allowedProviders:
+      - openAI
+      - google
+      - Image Editor
+      - Image Generator
+      - anthropic
+      - assistants
+      - azureAssistants
+      - bedrock
+      - General
+      - Search
+      - Programming
+      - OpenRouter
+      - OpenRouter - Fetch All
+      - custom
+
+      
+modelSpecs:
+  enforce: false
+  prioritize: false
+  # addedEndpoints: ["custom", "agents", "General", "Search", "Programming",OpenRouter", "OpenRouter - Fetch All"]
+  list:
+    # Gemini 2.5 Flash
+    - name: "general-info-gemini"
+      label: "General Info Assistant (Gemini 2.5 Flash)"
+      default: false
+      description: "Fast and accurate general information assistant"
+      iconURL: "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"
+      preset:
+        endpoint: "General"
+        model: "google/gemini-2.5-flash-preview"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "General Info Assistant"
+        greeting: |
+          I'm your general information assistant, ready to help with any questions you have.
+          I can provide accurate, well-researched information on various topics.
+        promptPrefix: |
+          You are a knowledgeable information assistant.
+          Focus on:
+            - Providing accurate, well-researched information
+            - Explaining concepts clearly and concisely
+            - Citing reliable sources when appropriate
+            - Breaking down complex topics into understandable parts
+
+    # Grok-3 Beta
+    - name: "general-info-grok"
+      label: "General Info Grok-3"
+      description: "Innovative general information assistant"
+      iconURL: "https://x.ai/favicon.ico"
+      default: false
+      preset:
+        endpoint: "General"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "General Info Grok-3"
+        greeting: |
+          I'm your Grok-3 powered general information assistant.
+          I can help with innovative perspectives and creative solutions.
+        promptPrefix: |
+          You are a knowledgeable information assistant.
+          Focus on:
+          - Providing accurate, well-researched information
+          - Explaining concepts clearly and concisely
+          - Citing reliable sources when appropriate
+          - Breaking down complex topics into understandable parts
+    # Laravel Vue PrimeNG Expert
+    - name: "laravel-vue-primeng-expert"
+      label: "Laravel Vue PrimeNG Expert (Gemini 2.5 Pro)"
+      description: "Advanced Laravel, Vue.js, and PrimeNG development assistant"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Expert"
+        greeting: |
+          I'm your expert Laravel, Vue.js, and PrimeNG development assistant.
+          I can help you build modern web applications using Laravel for the backend, Vue.js for the frontend, and PrimeNG for beautiful UI components.
+          Feel free to ask any questions about Laravel, Vue.js, PrimeNG, or related technologies.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Laravel Vue PrimeNG Thinking
+    - name: "laravel-vue-primeng-thinking"
+      label: "Laravel Vue PrimeNG Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Laravel, Vue.js, and PrimeNG assistant for quick solutions"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Thinking"
+        greeting: |
+          I'm your fast-thinking Laravel, Vue.js, and PrimeNG assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # GPT-4o Latest
+    - name: "laravel-vue-primeng-gpt4"
+      label: "Laravel Vue PrimeNG GPT-4 (Latest)"
+      description: "Advanced Laravel, Vue.js, and PrimeNG development with GPT-4"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # O4 Mini
+    - name: "laravel-vue-primeng-o4mini"
+      label: "Laravel Vue PrimeNG O4 Mini"
+      description: "Efficient Laravel, Vue.js, and PrimeNG development with O4 Mini"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG O4 Mini"
+        greeting: |
+          I'm your O4 Mini powered Laravel, Vue.js, and PrimeNG assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Grok-3 Beta
+    - name: "laravel-vue-primeng-grok"
+      label: "Laravel Vue PrimeNG Grok-3"
+      description: "Innovative Laravel, Vue.js, and PrimeNG development with Grok-3"
+      iconURL: "https://laravel.com/img/logomark.min.svg"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+
+    # Deepseek V3
+    - name: "laravel-vue-primeng-deepseek"
+      label: "Laravel Vue PrimeNG Deepseek V3"
+      description: "Deep learning powered Laravel, Vue.js, and PrimeNG development"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Laravel Vue PrimeNG Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Laravel, Vue.js, and PrimeNG assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Laravel, Vue.js, and PrimeNG expert specializing in modern web application development.
+          Focus on:
+          - Building robust Laravel REST APIs and backend services
+          - Creating reactive Vue.js applications with Vue 3 Composition API
+          - Implementing beautiful UIs with PrimeNG components
+          - Following Laravel best practices and design patterns
+          - Optimizing Vue.js performance and state management
+          - Integrating Laravel with Vue.js using best practices
+          - Providing clear, actionable solutions for full-stack development challenges
+    # Gemini 2.5 Pro Expert
+    - name: "kotlin-multiplatform-expert"
+      label: "Kotlin Multiplatform Expert (Gemini 2.5 Pro)"
+      default: false
+      description: "Advanced Kotlin Multiplatform development assistant with Compose for Android and iOS"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Expert"
+        greeting: |
+          I'm your expert Kotlin Multiplatform development assistant, specializing in Compose for Android and iOS.
+          I can help you write, review, and debug code, explain concepts, and provide best practices for Kotlin Multiplatform development.
+          Feel free to ask any questions about Kotlin Multiplatform, Compose, or related technologies.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+
+    # Gemini 2.5 Flash Thinking
+    - name: "kotlin-multiplatform-thinking"
+      label: "Kotlin Multiplatform Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Kotlin Multiplatform assistant for quick solutions"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Thinking"
+        greeting: |
+          I'm your fast-thinking Kotlin Multiplatform assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+
+        # GPT-4o Latest
+    - name: "kotlin-multiplatform-gpt4"
+      label: "Kotlin Multiplatform GPT-4 (Latest)"
+      description: "Advanced Kotlin Multiplatform development with GPT-4"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Kotlin Multiplatform assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+
+    # O4 Mini
+    - name: "kotlin-multiplatform-o4mini"
+      label: "Kotlin Multiplatform O4 Mini"
+      description: "Efficient Kotlin Multiplatform development with O4 Mini"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform O4 Mini"
+        greeting: |
+          I'm your o4 Mini powered Kotlin Multiplatform assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+
+    # Grok-3 Beta
+    - name: "kotlin-multiplatform-grok"
+      label: "Kotlin Multiplatform Grok-3"
+      description: "Innovative Kotlin Multiplatform development with Grok-3"
+      iconURL: "https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Kotlin Multiplatform assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+
+    # Deepseek V3
+    - name: "kotlin-multiplatform-deepseek"
+      label: "Kotlin Multiplatform Deepseek V3"
+      description: "Deep learning powered Kotlin Multiplatform development"
+      iconURL: "https://deepseek.ai/favicon.ico"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Kotlin Multiplatform Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Kotlin Multiplatform assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Kotlin Multiplatform expert specializing in Compose for Android and iOS.
+          Focus on:
+          - Writing idiomatic Kotlin code that works across platforms
+          - Implementing Compose UI components that follow Material Design and iOS guidelines
+          - Handling platform-specific requirements and best practices
+          - Explaining concepts with practical, real-world examples
+          - Following Kotlin Multiplatform best practices and design patterns
+          - Providing clear, actionable solutions for cross-platform development challenges
+    # Gemini 2.5 Pro Expert
+    - name: "spring-boot-expert"
+      label: "Spring Boot Expert (Gemini 2.5 Pro)"
+      description: "Advanced Spring Boot development assistant with Kotlin"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-pro-exp-03-25"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Expert"
+        greeting: |
+          I'm your expert Spring Boot development assistant, specializing in Kotlin.
+          I can help you write, review, and debug Spring Boot applications, explain concepts, and provide best practices.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # Gemini 2.5 Flash Thinking
+    - name: "spring-boot-thinking"
+      label: "Spring Boot Thinking (Gemini 2.5 Flash)"
+      description: "Fast-thinking Spring Boot assistant for quick solutions"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "google/gemini-2.5-flash-preview:thinking"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Spring Boot Thinking"
+        greeting: |
+          I'm your fast-thinking Spring Boot assistant, ready to help with quick solutions and explanations.
+          I specialize in rapid problem-solving and concise code examples.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # GPT-4o Latest
+    - name: "spring-boot-gpt4"
+      label: "Spring Boot GPT-4 (Latest)"
+      description: "Advanced Spring Boot development with GPT-4"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "openai/chatgpt-4o-latest"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot GPT-4"
+        greeting: |
+          I'm your GPT-4 powered Spring Boot assistant.
+          I can help with complex development tasks, code reviews, and detailed explanations.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # O4 Mini
+    - name: "spring-boot-o4mini"
+      label: "Spring Boot O4 Mini"
+      description: "Efficient Spring Boot development with O4 Mini"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "openai/o4-mini"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "Spring Boot O4 Mini"
+        greeting: |
+          I'm your O4 Mini powered Spring Boot assistant.
+          I provide efficient solutions and clear explanations.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # Grok-3 Beta
+    - name: "spring-boot-grok"
+      label: "Spring Boot Grok-3"
+      description: "Innovative Spring Boot development with Grok-3"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "x-ai/grok-3-beta"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Grok-3"
+        greeting: |
+          I'm your Grok-3 powered Spring Boot assistant.
+          I can help with innovative solutions and creative approaches.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # Deepseek V3
+    - name: "spring-boot-deepseek"
+      label: "Spring Boot Deepseek V3"
+      description: "Deep learning powered Spring Boot development"
+      iconURL: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG"
+      preset:
+        endpoint: "Programming"
+        model: "deepseek/deepseek-chat-v3-0324"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Spring Boot Deepseek"
+        greeting: |
+          I'm your Deepseek V3 powered Spring Boot assistant.
+          I can help with complex development tasks and detailed analysis.
+        promptPrefix: |
+          You are a Spring Boot expert specializing in Kotlin development.
+          Focus on:
+          - Writing clean, maintainable Spring Boot applications
+          - Implementing RESTful APIs and microservices
+          - Applying Spring Security best practices
+          - Optimizing performance and resource usage
+          - Following SOLID principles and clean architecture
+          - Providing practical solutions for common Spring Boot challenges
+
+    # General Research
+    - name: "general-research-sonar"
+      label: "General Research (Sonar)"
+      description: "Fast and accurate general research assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar"
+        maxContextTokens: 64000
+        max_tokens: 2048
+        temperature: 0.1
+        modelLabel: "General Research Sonar"
+        greeting: |
+          I'm your general research assistant, ready to help find accurate information.
+          I can search and synthesize information from various sources.
+        promptPrefix: |
+          You are a research assistant.
+          Focus on:
+          - Finding and synthesizing information from reliable sources
+          - Providing well-documented, factual information
+          - Analyzing information from multiple perspectives
+          - Drawing logical conclusions based on evidence
+          - Citing sources appropriately
+    # Deep Research
+    - name: "deep-research-sonar"
+      label: "Deep Research (Sonar Deep)"
+      description: "In-depth research assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar-deep-research"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Deep Research Sonar"
+        greeting: |
+          I'm your deep research assistant, ready to help with in-depth analysis.
+          I can perform thorough research and provide detailed insights.
+        promptPrefix: |
+          You are a deep research specialist.
+          Focus on:
+          - Conducting thorough, in-depth analysis
+          - Exploring multiple perspectives and viewpoints
+          - Identifying patterns and connections
+          - Providing detailed, well-sourced information
+          - Drawing comprehensive conclusions
+
+    # Reasoning Research
+    - name: "reasoning-research-sonar"
+      label: "Reasoning Research (Sonar Reasoning)"
+      description: "Advanced reasoning and analysis assistant"
+      iconURL: "https://perplexity.ai/favicon.ico"
+      preset:
+        endpoint: "Search"
+        model: "perplexity/sonar-reasoning-pro"
+        maxContextTokens: 128000
+        max_tokens: 4096
+        temperature: 0.1
+        modelLabel: "Reasoning Research Sonar"
+        greeting: |
+          I'm your reasoning research assistant, ready to help with complex analysis.
+          I can help analyze information and provide logical insights.
+        promptPrefix: |
+          You are a reasoning and analysis specialist.
+          Focus on:
+          - Analyzing information logically and systematically
+          - Identifying cause-and-effect relationships
+          - Evaluating arguments and evidence
+          - Drawing well-reasoned conclusions
+          - Considering implications and consequences
+    - name: "Custom Agents"
+      label: "Custom Agents"
+      default: false
+      preset:
+        endpoint: "agents"

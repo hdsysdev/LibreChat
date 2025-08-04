@@ -6,10 +6,6 @@ def sort_and_group_ids(ids, stealth_models=None):
     """Sort and group model IDs, including category headers."""
     models_list = []
     
-    if first_model in ids:
-        ids.remove(first_model)
-        models_list.append(first_model)
-    
     # Group IDs by their suffix
     grouped_ids = defaultdict(list)
     sorted_suffixes = [':free', ':nitro', ':beta', ':extended']
@@ -73,7 +69,7 @@ def get_stealth_models():
     if add_stealth == 'y' or add_stealth == 'yes':
         saved_models = []
         try:
-            with open("openrouter.txt", 'r') as file:
+            with open("../openrouter.txt", 'r') as file:
                 all_models = json.load(file)
                 
                 # Find STEALTH section and extract models
@@ -128,8 +124,8 @@ def fetch_and_save_model_ids(url, output_file):
 def main():
     # URL for the JSON list
     url = "https://openrouter.ai/api/v1/models"
-    # Output file path
-    output_file = "openrouter.txt"
+    # Output file path - save in parent directory (root directory)
+    output_file = "../openrouter.txt"
     
     fetch_and_save_model_ids(url, output_file)
 
