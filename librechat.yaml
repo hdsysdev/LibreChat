@@ -1,5 +1,10 @@
 version: 1.2.1
 cache: true
+
+# File strategy configuration
+fileStrategy: "local"
+
+# Custom interface configuration
 interface:
   customWelcome: Welcome to SlopAI {{user.name}}! What kind of slop would you like
     me to generate for you today?
@@ -11,16 +16,68 @@ interface:
   presets: true
   endpointsMenu: true
   sidePanel: true
+ 
+# File upload configuration
+fileUpload:
+  limits:
+    default:
+      totalSizeLimit: 20
+      fileLimit: 10
+      fileSizeLimit: 5
+    Programming:
+      totalSizeLimit: 50
+      fileLimit: 20
+      fileSizeLimit: 10
+  supportedMimeTypes:
+    - "image/.*"
+    - "application/pdf"
+    - "text/.*"
+    - "application/json"
+    - "application/javascript"
+    - "application/typescript"
+    - "application/xml"
+    - "application/yaml"
+    - "application/yml"
+  serverFileSizeLimit: 100
+  avatarSizeLimit: 2
+  clientImageResize:
+    enabled: true
+    maxWidth: 1900
+    maxHeight: 1900
+    quality: 0.92
+
+# Memory configuration for user memories
+memory:
+  disabled: false
+  validKeys: ["preferences", "work_info", "personal_info", "skills", "interests", "context", "coding_style", "project_preferences"]
+  tokenLimit: 10000
+  personalize: true
+  agent:
+    provider: "openai"
+    model: "gpt-4o-mini"
+    instructions: "You are a memory management assistant. Store and manage user information accurately and securely."
+
+
+# Balance settings for token management
+balance:
+  enabled: true
+  startBalance: 20000
+  autoRefillEnabled: false
+  refillIntervalValue: 30
+  refillIntervalUnit: 'days'
+  refillAmount: 10000
+
+# Speech configuration with environment variables
 speech:
   stt:
     openai:
-      url: https://api.lemonfox.ai/v1/audio/transcriptions
-      apiKey: 09s7wYMI6vKhvbI4QgvqerzceWA3S1kw
+      url: ${LEMONFOX_STT_URL}
+      apiKey: ${LEMONFOX_API_KEY}
       model: whisper-1
   tts:
     openai:
-      url: https://api.lemonfox.ai/v1/audio/speech
-      apiKey: 09s7wYMI6vKhvbI4QgvqerzceWA3S1kw
+      url: ${LEMONFOX_TTS_URL}
+      apiKey: ${LEMONFOX_API_KEY}
       model: tts-1
       voices:
       - alice
@@ -33,6 +90,8 @@ speech:
   speechTab:
     conversationMode: true
     advancedMode: true
+
+# MCP Servers configuration
 mcpServers:
   context7:
     type: stdio
@@ -71,6 +130,8 @@ mcpServers:
     args:
     - -y
     - mcp-server-time
+
+# Web search configuration
 webSearch:
   serperApiKey: ${SERPER_API_KEY}
   searchProvider: serper
@@ -78,6 +139,8 @@ webSearch:
   rerankerType: jina
   firecrawlApiKey: ${FIRECRAWL_API_KEY}
   scraperType: firecrawl
+
+# Endpoints configuration
 endpoints:
   custom:
   - name: Programming
@@ -85,24 +148,20 @@ endpoints:
     baseURL: https://openrouter.ai/api/v1
     models:
       default:
-      - google/gemini-2.5-pro-exp-03-25
-      - google/gemini-2.5-pro-exp-03-25
-      - openai/chatgpt-4o-latest
+      - google/gemini-2.5-pro
+      - google/gemini-2.5-flash
+      - openai/gpt-4o
       - openai/o4-mini
-      - x-ai/grok-3-beta
       - x-ai/grok-4
       - openai/gpt-4o-mini
-      - google/gemini-2.5-pro-exp-03-25
-      - google/gemini-2.5-pro-exp-03-25
       - deepseek/deepseek-chat-v3-0324
       - deepseek/deepseek-r1
       - anthropic/claude-3.7-sonnet:thinking
-      - anthropic/claude-3.7-sonnet:thinking
       fetch: false
     titleConvo: true
-    titleModel: openai/gpt-4.1-nano-2025-04-14
+    titleModel: openai/gpt-4o-mini
     summarize: false
-    summaryModel: openai/gpt-4.1-nano-2025-04-14
+    summaryModel: openai/gpt-4o-mini
     forcePrompt: false
   - name: OpenRouter - Fetch All
     apiKey: ${OPENROUTER_KEY}
@@ -112,9 +171,9 @@ endpoints:
       - openrouter/auto
       fetch: true
     titleConvo: true
-    titleModel: openai/gpt-4.1-nano-2025-04-14
+    titleModel: openai/gpt-4o-mini
     summarize: false
-    summaryModel: openai/gpt-4.1-nano-2025-04-14
+    summaryModel: openai/gpt-4o-mini
     forcePrompt: false
   agents:
     disableBuilder: false
@@ -135,6 +194,8 @@ endpoints:
     - OpenRouter
     - OpenRouter - Fetch All
     - custom
+
+# Model specifications
 modelSpecs:
   enforce: false
   prioritize: false
@@ -146,7 +207,7 @@ modelSpecs:
     iconURL: https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png
     preset:
       endpoint: General
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-flash
       maxContextTokens: 64000
       max_tokens: 2048
       temperature: 0.1
@@ -162,18 +223,18 @@ modelSpecs:
         \ clearly and concisely\n  - Citing reliable sources when appropriate\n  -\
         \ Breaking down complex topics into understandable parts\n"
   - name: general-info-grok
-    label: General Info Grok-3
+    label: General Info Grok-4
     description: Innovative general information assistant
     iconURL: https://x.ai/favicon.ico
     default: false
     preset:
       endpoint: General
-      model: x-ai/grok-3-beta
+      model: x-ai/grok-4
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
-      modelLabel: General Info Grok-3
-      greeting: 'I''m your Grok-3 powered general information assistant.
+      modelLabel: General Info Grok-4
+      greeting: 'I''m your Grok-4 powered general information assistant.
 
         I can help with innovative perspectives and creative solutions.
 
@@ -197,7 +258,7 @@ modelSpecs:
     iconURL: https://laravel.com/img/logomark.min.svg
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-pro
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -237,7 +298,7 @@ modelSpecs:
     iconURL: https://laravel.com/img/logomark.min.svg
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-flash
       maxContextTokens: 64000
       max_tokens: 2048
       temperature: 0.1
@@ -274,7 +335,7 @@ modelSpecs:
     iconURL: https://laravel.com/img/logomark.min.svg
     preset:
       endpoint: Programming
-      model: openai/chatgpt-4o-latest
+      model: openai/gpt-4o
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -341,17 +402,17 @@ modelSpecs:
 
         '
   - name: laravel-vue-primeng-grok
-    label: Laravel Vue PrimeNG Grok-3
-    description: Innovative Laravel, Vue.js, and PrimeNG development with Grok-3
+    label: Laravel Vue PrimeNG Grok-4
+    description: Innovative Laravel, Vue.js, and PrimeNG development with Grok-4
     iconURL: https://laravel.com/img/logomark.min.svg
     preset:
       endpoint: Programming
-      model: x-ai/grok-3-beta
+      model: x-ai/grok-4
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
-      modelLabel: Laravel Vue PrimeNG Grok-3
-      greeting: 'I''m your Grok-3 powered Laravel, Vue.js, and PrimeNG assistant.
+      modelLabel: Laravel Vue PrimeNG Grok-4
+      greeting: 'I''m your Grok-4 powered Laravel, Vue.js, and PrimeNG assistant.
 
         I can help with innovative solutions and creative approaches.
 
@@ -420,7 +481,7 @@ modelSpecs:
     iconURL: https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-pro
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -459,7 +520,7 @@ modelSpecs:
     iconURL: https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-flash
       maxContextTokens: 64000
       max_tokens: 2048
       temperature: 0.1
@@ -494,7 +555,7 @@ modelSpecs:
     iconURL: https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png
     preset:
       endpoint: Programming
-      model: openai/chatgpt-4o-latest
+      model: openai/gpt-4o
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -557,17 +618,17 @@ modelSpecs:
 
         '
   - name: kotlin-multiplatform-grok
-    label: Kotlin Multiplatform Grok-3
-    description: Innovative Kotlin Multiplatform development with Grok-3
+    label: Kotlin Multiplatform Grok-4
+    description: Innovative Kotlin Multiplatform development with Grok-4
     iconURL: https://raw.githubusercontent.com/JetBrains/kotlin-web-site/master/pdf/kotlin-logo.png
     preset:
       endpoint: Programming
-      model: x-ai/grok-3-beta
+      model: x-ai/grok-4
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
-      modelLabel: Kotlin Multiplatform Grok-3
-      greeting: 'I''m your Grok-3 powered Kotlin Multiplatform assistant.
+      modelLabel: Kotlin Multiplatform Grok-4
+      greeting: 'I''m your Grok-4 powered Kotlin Multiplatform assistant.
 
         I can help with innovative solutions and creative approaches.
 
@@ -630,7 +691,7 @@ modelSpecs:
     iconURL: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-pro
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -665,7 +726,7 @@ modelSpecs:
     iconURL: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG
     preset:
       endpoint: Programming
-      model: google/gemini-2.5-pro-exp-03-25
+      model: google/gemini-2.5-flash
       maxContextTokens: 64000
       max_tokens: 2048
       temperature: 0.1
@@ -699,7 +760,7 @@ modelSpecs:
     iconURL: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG
     preset:
       endpoint: Programming
-      model: openai/chatgpt-4o-latest
+      model: openai/gpt-4o
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
@@ -760,17 +821,17 @@ modelSpecs:
 
         '
   - name: spring-boot-grok
-    label: Spring Boot Grok-3
-    description: Innovative Spring Boot development with Grok-3
+    label: Spring Boot Grok-4
+    description: Innovative Spring Boot development with Grok-4
     iconURL: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAclBMVEVHcExzuhpzuhh2vB14vR93vB13vB9suBF2vBp3vBx2vB54vB1rtxR0uRt1uwSo03psuADX68Ht9uNyug222ZH////2+/F+wCt1uxdsuADF4aiPx0/F4aSAwDSi0HTf7s////6czWb5/PaJxT6u1Ynm89ZqpjpNAAAAJnRSTlMAOX665vT/Wc7ebAQnFova/d3u/+L/8aP/8ePl1+/w7fnc+cDvWGpsffIAAAE0SURBVHgBZZNVYsQgEEBjTLzBhoV40u39r1iIy/tjXoQx78APwohAFAa+9yRO4CDNchspdlWGcCMpbChfnU/gSfxTFauDN5Tx2LmSvJ2QqD5Ohi+lTY2Ilbvn0wjacLS0NqfkiGotBDVdP4zo4PFxG6G7ZpL1MHDcmAMv2P+yBg8z4vxZryOaGe8wxHHyUvdeMz4cXyWxjnB8UHEreyeFfLkWlzcjADo8XLv8Zv51F6L3P47SKHTy41IxN6cas15hCFwRKL+o2kTbcbLlS88LjUp2tFHrYUhs4TMAwp1hsjHU1OPqFFn6mbjiVSml1DS7wsG
     preset:
       endpoint: Programming
-      model: x-ai/grok-3-beta
+      model: x-ai/grok-4
       maxContextTokens: 128000
       max_tokens: 4096
       temperature: 0.1
-      modelLabel: Spring Boot Grok-3
-      greeting: 'I''m your Grok-3 powered Spring Boot assistant.
+      modelLabel: Spring Boot Grok-4
+      greeting: 'I''m your Grok-4 powered Spring Boot assistant.
 
         I can help with innovative solutions and creative approaches.
 
